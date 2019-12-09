@@ -1,0 +1,41 @@
+//to normal FB/other website login using "reading property files from java"
+
+package selenium;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class FBDemo {
+
+	public static void main(String[] args) throws IOException {
+		
+		String path="C:\\Users\\kesava\\eclipse-workspace\\selenium\\src\\selenium\\details.properties";
+		Properties prop =new Properties();
+		FileInputStream fs  = new FileInputStream(path);
+		prop.load(fs);
+		String Username= prop.getProperty("username");
+		String Password= prop.getProperty("password");
+		String url= "https://www.fb.com";
+		
+		WebDriver driver;
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\kesava\\Desktop\\LTI\\New folder (2)\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.get(url);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.id("email")).sendKeys(Username);
+		driver.findElement(By.id("pass")).sendKeys(Password);
+		driver.findElement(By.id("u_0_2")).click();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.findElement(By.id("userNavigationLabel")).click();
+		driver.findElement(By.xpath("//span[contains(text(),'Log Out')]")).click();
+		
+	}
+
+}
